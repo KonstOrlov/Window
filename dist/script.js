@@ -18205,6 +18205,7 @@ var modals = function modals() {
     var modal = document.querySelector(modalSelector);
     var close = document.querySelector(closeSelector);
     var windows = document.querySelectorAll('[data-modal]');
+    var scroll = calcScroll();
     trigger.forEach(function (item) {
       item.addEventListener('click', function (e) {
         if (e.target) {
@@ -18214,27 +18215,27 @@ var modals = function modals() {
         windows.forEach(function (window) {
           window.style.display = 'none';
         });
-        modal.style.display = 'block'; // document.body.style.overflow = 'hidden';
-
-        document.body.classList.add('modal-open');
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        document.body.style.marginRight = "".concat(scroll, "px"); // document.body.classList.add('modal-open')
       });
     });
     close.addEventListener('click', function () {
       windows.forEach(function (window) {
         window.style.display = 'none';
       });
-      modal.style.display = 'none'; // document.body.style.overflow = '';
-
-      document.body.classList.remove('modal-open');
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+      document.body.style.marginRight = '0px'; // document.body.classList.remove('modal-open')
     });
     modal.addEventListener('click', function (e) {
       if (e.target === modal && closeClickOverlay) {
         windows.forEach(function (window) {
           window.style.display = 'none';
         });
-        modal.style.display = 'none'; // document.body.style.overflow = '';
-
-        document.body.classList.remove('modal-open');
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+        document.body.style.marginRight = '0px'; // document.body.classList.remove('modal-open')
       }
     });
   }
@@ -18244,6 +18245,18 @@ var modals = function modals() {
       document.querySelector(selector).style.display = 'block';
       document.body.style.overflow = 'hidden';
     }, time);
+  }
+
+  function calcScroll() {
+    var div = document.createElement('div');
+    div.style.width = '50px';
+    div.style.height = '50px';
+    div.style.overflowY = 'scroll';
+    div.style.visibility = 'hidden';
+    document.body.appendChild(div);
+    var scrollWidth = div.offsetWidth - div.clientWidth;
+    div.remove();
+    return scrollWidth;
   }
 
   bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
