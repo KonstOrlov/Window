@@ -1,10 +1,16 @@
 "use strict";
 
 const gulp = require("gulp");
+const deploy = require('gulp-gh-pages');
 const webpack = require("webpack-stream");
 const browsersync = require("browser-sync");
 
 const dist = "./dist/";
+
+gulp.task('deploy', function () {
+  return gulp.src("./dist/**/*")
+    .pipe(deploy())
+});
 
 gulp.task("copy-html", () => {
     return gulp.src("index.html")
