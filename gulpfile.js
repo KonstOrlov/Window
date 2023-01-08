@@ -7,11 +7,7 @@ const browsersync = require("browser-sync");
 
 const dist = "./dist/";
 
-const options = {
-  branch: "main",
-}
-
-gulp.task('deploy', () => gulp.src('./dist/**/*').pipe(ghPages(options)));
+gulp.task('deploy', () => gulp.src('./dist/**/*').pipe(ghPages()));
 
 gulp.task("copy-html", () => {
     return gulp.src("index.html")
